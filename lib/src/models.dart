@@ -14,7 +14,7 @@ class VersionInfo {
 
 class LLMConfig {
   final String baseUrl;
-  final String apiKey;
+  final String? apiKey;
   final String model;
 
   LLMConfig({required this.baseUrl, required this.apiKey, required this.model});
@@ -22,16 +22,12 @@ class LLMConfig {
   factory LLMConfig.fromJson(JsonMap json) {
     return LLMConfig(
       baseUrl: json['baseUrl'] as String,
-      apiKey: json['apiKey'] as String,
+      apiKey: json['apiKey'] as String?,
       model: json['model'] as String,
     );
   }
 
-  JsonMap toJson() => {
-        'baseUrl': baseUrl,
-        'apiKey': apiKey,
-        'model': model,
-      };
+  JsonMap toJson() => {'baseUrl': baseUrl, 'apiKey': apiKey, 'model': model};
 }
 
 class TokenUsage {
@@ -47,10 +43,7 @@ class TokenUsage {
     );
   }
 
-  JsonMap toJson() => {
-        'promptToken': promptToken,
-        'totalToken': totalToken,
-      };
+  JsonMap toJson() => {'promptToken': promptToken, 'totalToken': totalToken};
 }
 
 class DocsId {
@@ -78,10 +71,7 @@ class DocsInfo extends DocsId {
   }
 
   @override
-  JsonMap toJson() => {
-        'docsId': docsId,
-        'docsName': docsName,
-      };
+  JsonMap toJson() => {'docsId': docsId, 'docsName': docsName};
 }
 
 class CreateDocsTextRequest {
@@ -100,12 +90,12 @@ class CreateDocsTextRequest {
   });
 
   JsonMap toJson() => {
-        'docsName': docsName,
-        'text': text,
-        'separator': separator,
-        'metadata': metadata,
-        'llmConfig': llmConfig.toJson(),
-      };
+    'docsName': docsName,
+    'text': text,
+    'separator': separator,
+    'metadata': metadata,
+    'llmConfig': llmConfig.toJson(),
+  };
 }
 
 class Segment {
@@ -121,10 +111,7 @@ class Segment {
     );
   }
 
-  JsonMap toJson() => {
-        'text': text,
-        'metadata': metadata,
-      };
+  JsonMap toJson() => {'text': text, 'metadata': metadata};
 }
 
 class SegmentInfo extends Segment {
@@ -142,10 +129,10 @@ class SegmentInfo extends Segment {
 
   @override
   JsonMap toJson() => {
-        'segmentId': segmentId,
-        'text': text,
-        'metadata': metadata,
-      };
+    'segmentId': segmentId,
+    'text': text,
+    'metadata': metadata,
+  };
 }
 
 class SegmentResult {
@@ -171,11 +158,11 @@ class SegmentResult {
   }
 
   JsonMap toJson() => {
-        'segmentId': segmentId,
-        'text': text,
-        'metadata': metadata,
-        'distance': distance,
-      };
+    'segmentId': segmentId,
+    'text': text,
+    'metadata': metadata,
+    'distance': distance,
+  };
 }
 
 class CreateDocsRequest {
@@ -190,10 +177,10 @@ class CreateDocsRequest {
   });
 
   JsonMap toJson() => {
-        'docsName': docsName,
-        'segmentList': segmentList.map((segment) => segment.toJson()).toList(),
-        'llmConfig': llmConfig.toJson(),
-      };
+    'docsName': docsName,
+    'segmentList': segmentList.map((segment) => segment.toJson()).toList(),
+    'llmConfig': llmConfig.toJson(),
+  };
 }
 
 class CreateDocsResult extends DocsInfo {
@@ -215,10 +202,10 @@ class CreateDocsResult extends DocsInfo {
 
   @override
   JsonMap toJson() => {
-        'docsId': docsId,
-        'docsName': docsName,
-        'tokenUsage': tokenUsage.toJson(),
-      };
+    'docsId': docsId,
+    'docsName': docsName,
+    'tokenUsage': tokenUsage.toJson(),
+  };
 }
 
 class DocsFullInfo extends DocsInfo {
@@ -243,11 +230,12 @@ class DocsFullInfo extends DocsInfo {
 
   @override
   JsonMap toJson() => {
-        'docsId': docsId,
-        'docsName': docsName,
-        'segmentInfoList':
-            segmentInfoList.map((segment) => segment.toJson()).toList(),
-      };
+    'docsId': docsId,
+    'docsName': docsName,
+    'segmentInfoList': segmentInfoList
+        .map((segment) => segment.toJson())
+        .toList(),
+  };
 }
 
 class QueryRequest {
@@ -264,11 +252,11 @@ class QueryRequest {
   });
 
   JsonMap toJson() => {
-        'docsId': docsId,
-        'queryText': queryText,
-        if (nResults != null) 'nResults': nResults,
-        'llmConfig': llmConfig.toJson(),
-      };
+    'docsId': docsId,
+    'queryText': queryText,
+    if (nResults != null) 'nResults': nResults,
+    'llmConfig': llmConfig.toJson(),
+  };
 }
 
 class BatchQueryRequest {
@@ -285,11 +273,11 @@ class BatchQueryRequest {
   });
 
   JsonMap toJson() => {
-        'docsId': docsId,
-        'queryTextList': queryTextList,
-        if (nResults != null) 'nResults': nResults,
-        'llmConfig': llmConfig.toJson(),
-      };
+    'docsId': docsId,
+    'queryTextList': queryTextList,
+    if (nResults != null) 'nResults': nResults,
+    'llmConfig': llmConfig.toJson(),
+  };
 }
 
 class QueryResult {
@@ -315,11 +303,12 @@ class QueryResult {
   }
 
   JsonMap toJson() => {
-        'docsId': docsId,
-        'segmentResultList':
-            segmentResultList.map((segment) => segment.toJson()).toList(),
-        'tokenUsage': tokenUsage.toJson(),
-      };
+    'docsId': docsId,
+    'segmentResultList': segmentResultList
+        .map((segment) => segment.toJson())
+        .toList(),
+    'tokenUsage': tokenUsage.toJson(),
+  };
 }
 
 class MultiDocsQueryRequest {
@@ -338,12 +327,12 @@ class MultiDocsQueryRequest {
   });
 
   JsonMap toJson() => {
-        'docsIdList': docsIdList,
-        'queryText': queryText,
-        if (nResults != null) 'nResults': nResults,
-        if (removeDuplicates != null) 'removeDuplicates': removeDuplicates,
-        'llmConfig': llmConfig.toJson(),
-      };
+    'docsIdList': docsIdList,
+    'queryText': queryText,
+    if (nResults != null) 'nResults': nResults,
+    if (removeDuplicates != null) 'removeDuplicates': removeDuplicates,
+    'llmConfig': llmConfig.toJson(),
+  };
 }
 
 class MultiDocsQuerySegment {
@@ -355,15 +344,14 @@ class MultiDocsQuerySegment {
   factory MultiDocsQuerySegment.fromJson(JsonMap json) {
     return MultiDocsQuerySegment(
       docsId: json['docsId'] as String,
-      segmentResult:
-          SegmentResult.fromJson(json['segmentResult'] as JsonMap),
+      segmentResult: SegmentResult.fromJson(json['segmentResult'] as JsonMap),
     );
   }
 
   JsonMap toJson() => {
-        'docsId': docsId,
-        'segmentResult': segmentResult.toJson(),
-      };
+    'docsId': docsId,
+    'segmentResult': segmentResult.toJson(),
+  };
 }
 
 class MultiDocsQueryResult {
@@ -386,10 +374,11 @@ class MultiDocsQueryResult {
   }
 
   JsonMap toJson() => {
-        'segmentResultList':
-            segmentResultList.map((segment) => segment.toJson()).toList(),
-        'tokenUsage': tokenUsage.toJson(),
-      };
+    'segmentResultList': segmentResultList
+        .map((segment) => segment.toJson())
+        .toList(),
+    'tokenUsage': tokenUsage.toJson(),
+  };
 }
 
 class InsertSegmentRequest {
@@ -406,11 +395,11 @@ class InsertSegmentRequest {
   });
 
   JsonMap toJson() => {
-        'docsId': docsId,
-        'segment': segment.toJson(),
-        if (index != null) 'index': index,
-        'llmConfig': llmConfig.toJson(),
-      };
+    'docsId': docsId,
+    'segment': segment.toJson(),
+    if (index != null) 'index': index,
+    'llmConfig': llmConfig.toJson(),
+  };
 }
 
 class UpdateSegmentRequest {
@@ -425,10 +414,10 @@ class UpdateSegmentRequest {
   });
 
   JsonMap toJson() => {
-        'docsId': docsId,
-        'segment': segment.toJson(),
-        'llmConfig': llmConfig.toJson(),
-      };
+    'docsId': docsId,
+    'segment': segment.toJson(),
+    'llmConfig': llmConfig.toJson(),
+  };
 }
 
 class DeleteSegmentRequest {
@@ -437,10 +426,7 @@ class DeleteSegmentRequest {
 
   DeleteSegmentRequest({required this.docsId, required this.segmentId});
 
-  JsonMap toJson() => {
-        'docsId': docsId,
-        'segmentId': segmentId,
-      };
+  JsonMap toJson() => {'docsId': docsId, 'segmentId': segmentId};
 }
 
 class SegmentUpsertResult {
@@ -457,9 +443,9 @@ class SegmentUpsertResult {
   }
 
   JsonMap toJson() => {
-        'segmentId': segmentId,
-        'tokenUsage': tokenUsage.toJson(),
-      };
+    'segmentId': segmentId,
+    'tokenUsage': tokenUsage.toJson(),
+  };
 }
 
 class SegmentId {
