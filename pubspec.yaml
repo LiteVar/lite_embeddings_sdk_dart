@@ -1,5 +1,5 @@
 name: lite_embeddings_sdk_dart
-description: A dart client for lite_embeddings_dart_server http API.
+description: A dart sdk for lite_embeddings_dart_server http API.
 version: 0.1.0
 repository: https://github.com/LiteVar/lite_embeddings_sdk_dart
 
