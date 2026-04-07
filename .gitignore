@@ -10,3 +10,5 @@ lite_embeddings_sdk_dart.iml
 pubspec.lock
 
 AGENTS.md
+
+.fenn/
